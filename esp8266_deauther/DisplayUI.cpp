@@ -4,6 +4,10 @@
 
 #include "settings.h"
 
+#include "bobeks_pic.h" // Roadbobeks Stuff
+
+#include "bobeks_wifi_anim.h" // Roadbobeks Stuff
+
 // ===== adjustable ===== //
 void DisplayUI::configInit() {
     // initialize display
@@ -80,6 +84,7 @@ void DisplayUI::setup() {
 
     // MAIN MENU
     createMenu(&mainMenu, NULL, [this]() {
+        addMenuNode(&mainMenu, D_ROADBOBEK, &roadbobekMenu); // ROADBOBEK <3 MENU , Roadbobeks Stuff
         addMenuNode(&mainMenu, D_SCAN, &scanMenu);          /// SCAN
         addMenuNode(&mainMenu, D_SHOW, &showMenu);          // SHOW
         addMenuNode(&mainMenu, D_ATTACK, &attackMenu);      // ATTACK
@@ -455,6 +460,30 @@ void DisplayUI::setup() {
         });
     });
 
+    // ROADBOBEK MENU, Roadbobeks Stuff
+    createMenu(&roadbobekMenu, &mainMenu, [this]() {
+        addMenuNode(&roadbobekMenu, D_DISPLAY_RSSI, [this]() { // rssi
+            mode = DISPLAY_MODE::DISPLAY_RSSI;
+            display.setFont(DejaVu_Sans_Mono_12);
+            display.setTextAlignment(TEXT_ALIGN_LEFT);
+        });
+        addMenuNode(&roadbobekMenu, D_DISPLAY_UPTIME, [this]() { // uptime
+            mode = DISPLAY_MODE::DISPLAY_UPTIME;
+            display.setTextAlignment(TEXT_ALIGN_LEFT);
+        });
+        addMenuNode(&roadbobekMenu, D_DISPLAY_WIFI_ANIM, [this]() { // wifi anim
+            mode = DISPLAY_MODE::DISPLAY_WIFI_ANIM;
+        });
+        addMenuNode(&roadbobekMenu, D_DISPLAY_ROADBOBEK_PIC, [this]() { // pic
+            mode = DISPLAY_MODE::DISPLAY_ROADBOBEK_PIC;
+        });
+        addMenuNode(&roadbobekMenu, D_DISPLAY_ROADBOBEK_STR, [this]() { // str
+            mode = DISPLAY_MODE::DISPLAY_ROADBOBEK_STR;
+            display.setFont(DejaVu_Sans_Mono_12);
+            display.setTextAlignment(TEXT_ALIGN_CENTER);
+        });
+    });
+
     // ===================== //
 
     // set current menu to main menu
@@ -534,6 +563,11 @@ void DisplayUI::setupButtons() {
                 scan.setChannel(wifi_channel + 1);
             } else if (mode == DISPLAY_MODE::CLOCK) {         // when in clock, change time
                 setTime(clockHour, clockMinute + 1, clockSecond);
+            // Roadbobeks Stuff
+            } else if (mode == DISPLAY_MODE::DISPLAY_RSSI) {
+                if (rssiScrollOffset > 0) {
+                    rssiScrollOffset--;
+                }
             }
         }
     });
@@ -550,6 +584,11 @@ void DisplayUI::setupButtons() {
                 scan.setChannel(wifi_channel + 1);
             } else if (mode == DISPLAY_MODE::CLOCK) {         // when in clock, change time
                 setTime(clockHour, clockMinute + 10, clockSecond);
+            // Roadbobeks Stuff
+            } else if (mode == DISPLAY_MODE::DISPLAY_RSSI) {
+                if (rssiScrollOffset > 0) {
+                    rssiScrollOffset--;
+                }
             }
         }
     }, buttonDelay);
@@ -567,6 +606,11 @@ void DisplayUI::setupButtons() {
                 scan.setChannel(wifi_channel - 1);
             } else if (mode == DISPLAY_MODE::CLOCK) {         // when in clock, change time
                 setTime(clockHour, clockMinute - 1, clockSecond);
+            // Roadbobeks Stuff
+            } else if (mode == DISPLAY_MODE::DISPLAY_RSSI) {
+                if (true) {
+                    rssiScrollOffset++;
+                }
             }
         }
     });
@@ -582,9 +626,13 @@ void DisplayUI::setupButtons() {
             } else if (mode == DISPLAY_MODE::PACKETMONITOR) { // when in packet monitor, change channel
                 scan.setChannel(wifi_channel - 1);
             }
-
             else if (mode == DISPLAY_MODE::CLOCK) {           // when in clock, change time
                 setTime(clockHour, clockMinute - 10, clockSecond);
+            // Roadbobeks Stuff
+            } else if (mode == DISPLAY_MODE::DISPLAY_RSSI) {
+                if (true) {
+                    rssiScrollOffset++;
+                }
             }
         }
     }, buttonDelay);
@@ -611,6 +659,28 @@ void DisplayUI::setupButtons() {
 
                 case DISPLAY_MODE::CLOCK:
                 case DISPLAY_MODE::CLOCK_DISPLAY:
+                    mode = DISPLAY_MODE::MENU;
+                    display.setFont(DejaVu_Sans_Mono_12);
+                    display.setTextAlignment(TEXT_ALIGN_LEFT);
+                    break;
+                
+                // Roadbobeks Stuff
+                case DISPLAY_MODE::DISPLAY_RSSI:
+                    mode = DISPLAY_MODE::MENU;
+                    rssiScrollOffset = 0;
+                    // display.setFont(DejaVu_Sans_Mono_12);
+                    // display.setTextAlignment(TEXT_ALIGN_LEFT);
+                    break;
+                case DISPLAY_MODE::DISPLAY_ROADBOBEK_STR:
+                    display.setFont(DejaVu_Sans_Mono_12);
+                    display.setTextAlignment(TEXT_ALIGN_LEFT);
+                case DISPLAY_MODE::DISPLAY_ROADBOBEK_PIC:
+                    mode = DISPLAY_MODE::MENU;
+                    break;
+                case DISPLAY_MODE:: DISPLAY_WIFI_ANIM:
+                    mode = DISPLAY_MODE::MENU;
+                    break;
+                case DISPLAY_MODE::DISPLAY_UPTIME:
                     mode = DISPLAY_MODE::MENU;
                     display.setFont(DejaVu_Sans_Mono_12);
                     display.setTextAlignment(TEXT_ALIGN_LEFT);
@@ -712,6 +782,21 @@ void DisplayUI::draw(bool force) {
             case DISPLAY_MODE::CLOCK_DISPLAY:
                 drawClock();
                 break;
+            case DISPLAY_MODE::DISPLAY_RSSI: // Roadbobeks Stuff
+                drawRSSI();
+                break;
+            case DISPLAY_MODE::DISPLAY_ROADBOBEK_STR: // Roadbobeks Stuff
+                drawBobeksStr();
+                break;
+            case DISPLAY_MODE::DISPLAY_ROADBOBEK_PIC: // Roadbobeks Stuff
+                drawBobeksPic();
+                break;
+            case DISPLAY_MODE::DISPLAY_WIFI_ANIM: // Roadbobeks Stuff
+                drawWifiAnim();
+                break;
+            case DISPLAY_MODE::DISPLAY_UPTIME: // Roadbobeks Stuff
+                drawUptime();
+                break;
             case DISPLAY_MODE::RESETTING:
                 drawResetting();
                 break;
@@ -804,18 +889,35 @@ void DisplayUI::drawPacketMonitor() {
     }
 }
 
+// Roadbobeks Stuff, edited to add start pic
 void DisplayUI::drawIntro() {
-    drawString(0, center(str(D_INTRO_0), maxLen));
-    drawString(1, center(str(D_INTRO_1), maxLen));
-    drawString(2, center(str(D_INTRO_2), maxLen));
-    drawString(3, center(DEAUTHER_VERSION, maxLen));
-    if (scan.isScanning()) {
-        if (currentTime - startTime >= screenIntroTime+4500) drawString(4, left(str(D_SCANNING_3), maxLen));
-        else if (currentTime - startTime >= screenIntroTime+3000) drawString(4, left(str(D_SCANNING_2), maxLen));
-        else if (currentTime - startTime >= screenIntroTime+1500) drawString(4, left(str(D_SCANNING_1), maxLen));
-        else if (currentTime - startTime >= screenIntroTime) drawString(4, left(str(D_SCANNING_0), maxLen));
+    if (!drawStartPic) {
+        drawString(0, center(str(D_INTRO_0), maxLen));
+        drawString(1, center(str(D_INTRO_1), maxLen));
+        drawString(2, center(str(D_INTRO_2), maxLen));
+        drawString(3, center(DEAUTHER_VERSION, maxLen));
+        if (scan.isScanning()) {
+            if (currentTime - startTime >= screenIntroTime+3000) drawStartPic = true;
+            else if (currentTime - startTime >= screenIntroTime+1500) drawString(4, left(str(D_SCANNING_1), maxLen));
+            else if (currentTime - startTime >= screenIntroTime) drawString(4, left(str(D_SCANNING_0), maxLen));
+        }
+    } else {
+        display.drawXbm(0, 0, BOBEKS_PIC_WIDTH, BOBEKS_PIC_HEIGHT, BOBEKS_PIC_ARRAY); // Draw Bobeks Pic
     }
 }
+
+// void DisplayUI::drawIntro() {
+//     drawString(0, center(str(D_INTRO_0), maxLen));
+//     drawString(1, center(str(D_INTRO_1), maxLen));
+//     drawString(2, center(str(D_INTRO_2), maxLen));
+//     drawString(3, center(DEAUTHER_VERSION, maxLen));
+//     if (scan.isScanning()) {
+//         if (currentTime - startTime >= screenIntroTime+4500) drawString(4, left(str(D_SCANNING_3), maxLen));
+//         else if (currentTime - startTime >= screenIntroTime+3000) drawString(4, left(str(D_SCANNING_2), maxLen));
+//         else if (currentTime - startTime >= screenIntroTime+1500) drawString(4, left(str(D_SCANNING_1), maxLen));
+//         else if (currentTime - startTime >= screenIntroTime) drawString(4, left(str(D_SCANNING_0), maxLen));
+//     }
+// }
 
 void DisplayUI::drawClock() {
     String clockTime = String(clockHour);
@@ -826,6 +928,255 @@ void DisplayUI::drawClock() {
 
     display.drawString(64, 20, clockTime);
 }
+
+
+// Roadbobeks Stuff
+int wapScanInterval = 2000; // Miliseconds
+int timeSinceLastScan = 2000; // Miliseconds
+int lastScanTime = millis();
+
+void DisplayUI::drawRSSI() {
+    timeSinceLastScan = millis() - lastScanTime;
+
+    // Static buffer to hold the lines from the LAST successful scan
+    static String bufferedLines[6]; // Header + 5 lines of results
+    const int maxRows = 5;
+
+    // 1. Scan initiation and data capturing
+    if (timeSinceLastScan >= wapScanInterval) {
+        if (!scan.isScanning()) {
+            
+            // --- MANUAL DEEP COPY OF DISPLAY DATA (Values, not Indices) ---
+            // Capture the valid data into our static buffer before the scan clears the list.
+            
+            Accesspoints* captureList = &accesspoints;
+            captureList->sort();
+            int count = captureList->count();
+            
+            // Clear buffer and store header (keeping user's debug output)
+            for (int i = 0; i < 6; i++) bufferedLines[i] = "";
+            bufferedLines[0] = "  " + str(D_DISPLAY_RSSI) + " " + String(rssiScrollOffset);
+            
+            // Store the currently visible 5 results into the 5 buffer slots (index 1 to 5).
+            // This is where the scroll fix is applied.
+            int buffer_idx = 1;
+            for (int i = rssiScrollOffset; i < count && buffer_idx <= maxRows; i++) {
+                int rssi = captureList->getRSSI(i);
+                String ssid = captureList->getSSID(i);
+                
+                String line = String(rssi) + "|" + ssid;
+                
+                if (line.length() > maxLen) {
+                    line = line.substring(0, maxLen);
+                }
+                
+                // Use a separate index (buffer_idx) to ensure the buffer is always filled from 1
+                bufferedLines[buffer_idx] = line;
+                buffer_idx++;
+            }
+            // --- END DATA CAPTURE ---
+            
+            // Start the new scan, which will clear the primary list
+            scan.start(SCAN_MODE_APS, 0, SCAN_MODE_OFF, 0, true, wifi_channel);
+            lastScanTime = millis();
+        }
+    }
+    
+    // 2. Drawing Logic
+    int row = 0; 
+    
+    if (scan.isScanning()) {
+        // While scanning, draw the buffered (old) data to maintain continuity
+        for (int i = 0; i < 6; i++) {
+            if (i == 0) {
+                 // Draw the header with "..." to indicate active scan
+                 drawString(row, bufferedLines[i] + "...");
+            } else if (bufferedLines[i].length() > 0) {
+                // Draw the pre-formatted line
+                drawString(row, bufferedLines[i]);
+            } else if (i == 1) {
+                // If the buffer is empty on the first result line, show "Scanning..."
+                // This handles the case where the very first scan hasn't completed yet.
+                drawString(row, "Scanning...");
+            }
+            row++;
+        }
+    } else {
+        // When not scanning, draw the fresh data from the primary list
+        Accesspoints* listToDraw = &accesspoints;
+        listToDraw->sort();
+        
+        // Draw the Header (including user's debug info)
+        drawString(row, "     " + str(D_DISPLAY_RSSI) + " " + String(rssiScrollOffset)); 
+        row++;
+
+        int count = listToDraw->count();
+
+        if (count == 0) {
+            drawString(row, "No APs found.");
+            return;
+        }
+
+        // Loop and Draw the results (applying scroll offset here)
+        for (int i = rssiScrollOffset; i < count && row <= maxRows; i++) {
+            int rssi = listToDraw->getRSSI(i);
+            String ssid = listToDraw->getSSID(i);
+            
+            String line = String(rssi) + "|" + ssid;
+
+            if (line.length() > maxLen) {
+                line = line.substring(0, maxLen);
+            }
+            
+            drawString(row, line); 
+            
+            row++;
+        }
+    }
+}
+
+
+// // Roadbobeks Stuff
+// int wapScanInterval = 2000; // Miliseconds
+// int timeSinceLastScan = 2000; // Miliseconds
+// int lastScanTime = millis();
+// void DisplayUI::drawRSSI() {
+//     timeSinceLastScan = millis() - lastScanTime;
+
+//     if (timeSinceLastScan >= wapScanInterval) {
+//         oldAccessPoints = accesspoints;
+//         scan.start(SCAN_MODE_APS, 0, SCAN_MODE_OFF, 0, true, wifi_channel); // Scan WAPS, non blocking
+//         lastScanTime = millis();
+//         timeSinceLastScan = 0;
+//     }
+
+//     // 1. CALL THE SORT FUNCTION to get the strongest signals first
+//     oldAccessPoints.sort(); 
+    
+//     // --- Drawing Setup ---
+//     int row = 0; 
+    
+//     // 2. DRAW THE HEADER on Row 0
+//     drawString(row, "     " + str(D_DISPLAY_RSSI)); 
+//     row++;
+
+//     // 3. LOOP AND DRAW THE TOP RESULTS
+//     int count = oldAccessPoints.count();
+//     int maxRows = 5;
+
+//     for (int i = rssiScrollOffset; i < count && row <= maxRows; i++) {
+        
+//         int rssi = oldAccessPoints.getRSSI(i);
+//         String ssid = oldAccessPoints.getSSID(i);
+        
+//         // 4. SIMPLE FORMATTING - NO LEFT/RIGHT ALIGNMENT
+//         // Create the string: [-55 | MyWiFiName]
+//         String line = String(rssi) + "|" + ssid;
+
+//         // 5. MANUAL TRUNCATION (Optional, but safe)
+//         // Only truncate the line if it is longer than maxLen
+//         if (line.length() > maxLen) {
+//             line = line.substring(0, maxLen);
+//         }
+        
+//         // 6. DRAW THE LINE using the row index
+//         drawString(row, line); 
+        
+//         row++;
+//     }
+// }
+
+// Roadbobeks Stuff
+void DisplayUI::drawBobeksStr() {
+     display.drawString(64, 20, "ROADBOBEK <3");
+}
+
+// Roadbobeks Stuff
+void DisplayUI::drawBobeksPic() {
+    display.drawXbm(0, 0, BOBEKS_PIC_WIDTH, BOBEKS_PIC_HEIGHT, BOBEKS_PIC_ARRAY); // Draw Bobeks Pic
+    // display.display();
+}
+
+// Roadbobeks Stuff
+int wifi_anim_frame = 0;
+bool wifi_anim_reverse = 0;
+void DisplayUI::drawWifiAnim() {
+    const unsigned char* current_frame_ptr = wifi_anim_epd_bitmap_allArray[wifi_anim_frame];
+    
+    display.drawXbm(
+        40, // X position (128 - 48) / 2 = 40
+        8,  // Y position (64 - 48) / 2 = 8
+        WIFI_ANIM_WIDTH,
+        WIFI_ANIM_HEIGHT,
+        current_frame_ptr // Pointer to the start of the current frame data
+    );
+
+    if (wifi_anim_reverse) {
+        wifi_anim_frame--;
+    }
+    else {
+        wifi_anim_frame++;
+    };
+
+    if (wifi_anim_frame >= wifi_anim_epd_bitmap_allArray_LEN - 1) {
+        if (wifi_anim_reverse) {
+            wifi_anim_reverse = false;
+        }
+        else {
+            (wifi_anim_reverse) = true;
+        };
+    };
+
+    if (wifi_anim_frame <= 0) {
+        if (wifi_anim_reverse) {
+            wifi_anim_reverse = false;
+        }
+        else {
+            (wifi_anim_reverse) = true;
+        };
+    };
+
+    // display.drawString(64, 20, "Scanning...");
+}
+
+// Roadbobeks Stuff
+void DisplayUI::drawUptime() {
+    unsigned long upTime = millis();
+    String upTimeStr = String(upTime);
+    long totalUptimeSeconds = upTime / 1000;
+    String uptimeSeconds = String(totalUptimeSeconds % 60);
+    String uptimeMinutes = String((totalUptimeSeconds / 60) % 60);
+    String uptimeHours = String(totalUptimeSeconds / 3600);
+    if (uptimeSeconds.length() == 1) {
+        uptimeSeconds = "0" + uptimeSeconds;
+    }
+    if (uptimeMinutes.length() == 1) {
+        uptimeMinutes = "0" + uptimeMinutes;
+    }
+    if (uptimeHours.length() == 1) {
+        uptimeHours = "0" + uptimeHours;
+    }
+    String uptimeFormattedStr = uptimeHours + ":" + uptimeMinutes + ":" + uptimeSeconds;
+    display.setFont(DejaVu_Sans_Mono_12);
+     display.drawString(6, 48, upTimeStr);
+    display.setFont(ArialMT_Plain_24);
+     display.drawString(18, 16, uptimeFormattedStr);
+}
+
+// // Roadbobeks Stuff
+// void DisplayUI::drawUptime() {
+//     unsigned long upTime = millis();
+//     String upTimeStr = String(upTime);
+//     long totalUptimeSeconds = upTime / 1000;
+//     int uptimeSeconds = totalUptimeSeconds % 60;
+//     int uptimeMinutes = (totalUptimeSeconds / 60) % 60;
+//     int uptimeHours = totalUptimeSeconds / 3600;
+//     String uptimeFormattedStr = String(uptimeHours) + ":" + String(uptimeMinutes) + ":" + String(uptimeSeconds);
+//     display.setFont(DejaVu_Sans_Mono_12);
+//      display.drawString(6, 48, upTimeStr);
+//     display.setFont(ArialMT_Plain_24);
+//      display.drawString(16, 16, uptimeFormattedStr);
+// }
 
 void DisplayUI::drawResetting() {
     drawString(2, center(str(D_RESETTING), maxLen));

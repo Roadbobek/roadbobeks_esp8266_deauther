@@ -165,7 +165,8 @@
 // ===== DISPLAY ===== //
   #define SH1106_I2C
   #define FLIP_DIPLAY true
-  #define DISPLAY_TEXT "Hardware by DSTIKE"
+  #define DISPLAY_TEXT "<< Roadbobek >>"
+  // #define DISPLAY_TEXT "Hardware by DSTIKE"
 
 // ===== BUTTONS ===== //
   #define BUTTON_UP 12
@@ -182,7 +183,8 @@
 // ===== DISPLAY ===== //
   #define SH1106_I2C
   #define FLIP_DIPLAY true
-  #define DISPLAY_TEXT "Hardware by DSTIKE"
+  #define DISPLAY_TEXT "<< Roadbobek >>"
+  // #define DISPLAY_TEXT "Hardware by DSTIKE"
 
 // ===== BUTTONS ===== //
   #define BUTTON_UP 10
@@ -207,7 +209,8 @@
 // ===== DISPLAY ===== //
   #define SH1106_I2C
   #define FLIP_DIPLAY true
-  #define DISPLAY_TEXT "Hardware by DSTIKE"
+  #define DISPLAY_TEXT "<< Roadbobek >>"
+  // #define DISPLAY_TEXT "Hardware by DSTIKE"
 
 // ===== BUTTONS ===== //
   #define BUTTON_UP 12
@@ -225,7 +228,8 @@
 // ===== DISPLAY ===== //
   #define SSD1306_I2C
   #define FLIP_DIPLAY true
-  #define DISPLAY_TEXT "Hardware by DSTIKE"
+  #define DISPLAY_TEXT "<< Roadbobek >>"
+  // #define DISPLAY_TEXT "Hardware by DSTIKE"
 
 // ===== BUTTONS ===== //
   #define BUTTON_UP 12
@@ -243,7 +247,8 @@
 // ===== DISPLAY ===== //
   #define SH1106_I2C
   #define FLIP_DIPLAY true
-  #define DISPLAY_TEXT "Hardware by DSTIKE"
+  #define DISPLAY_TEXT "<< Roadbobek >>"
+  // #define DISPLAY_TEXT "Hardware by DSTIKE"
 
 // ===== BUTTONS ===== //
   #define BUTTON_UP 12
@@ -260,7 +265,8 @@
 // ===== DISPLAY ===== //
   #define SH1106_I2C
   #define FLIP_DIPLAY true
-  #define DISPLAY_TEXT "Hardware by DSTIKE"
+  #define DISPLAY_TEXT "<< Roadbobek >>"
+  // #define DISPLAY_TEXT "Hardware by DSTIKE"
 
 // ===== BUTTONS ===== //
   #define BUTTON_UP 12
@@ -279,7 +285,8 @@
 // ===== DISPLAY ===== //
   #define SH1106_I2C
   #define FLIP_DIPLAY true
-  #define DISPLAY_TEXT "Hardware by DSTIKE"
+  #define DISPLAY_TEXT "<< Roadbobek >>"
+  // #define DISPLAY_TEXT "Hardware by DSTIKE"
 
   #define RTC_DS3231
 
@@ -307,7 +314,8 @@
 // ===== DISPLAY ===== //
   #define SH1106_I2C
   #define FLIP_DIPLAY true
-  #define DISPLAY_TEXT "Hardware by DSTIKE"
+  #define DISPLAY_TEXT "<< Roadbobek >>"
+  // #define DISPLAY_TEXT "Hardware by DSTIKE"
 
 // ===== BUTTONS ===== //
   #define BUTTON_UP 12
@@ -326,7 +334,8 @@
 // ===== DISPLAY ===== //
   #define SH1106_I2C
   #define FLIP_DIPLAY true
-  #define DISPLAY_TEXT "Hardware by DSTIKE"
+  #define DISPLAY_TEXT "<< Roadbobek >>"
+  // #define DISPLAY_TEXT "Hardware by DSTIKE"
 
   #define RTC_DS3231
 
@@ -607,10 +616,10 @@
 
 // ======== CONSTANTS ========== //
 // Do not change these values unless you know what you're doing!
-#define DEAUTHER_VERSION "2.6.1"
-#define DEAUTHER_VERSION_MAJOR 2
-#define DEAUTHER_VERSION_MINOR 6
-#define DEAUTHER_VERSION_REVISION 1
+#define DEAUTHER_VERSION "1.0.0"
+#define DEAUTHER_VERSION_MAJOR 1
+#define DEAUTHER_VERSION_MINOR 0
+#define DEAUTHER_VERSION_REVISION 0
 
 #define EEPROM_SIZE 4095
 #define BOOT_COUNTER_ADDR 1

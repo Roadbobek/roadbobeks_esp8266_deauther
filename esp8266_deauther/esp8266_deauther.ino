@@ -38,6 +38,7 @@ extern "C" {
 Names names;
 SSIDs ssids;
 Accesspoints accesspoints;
+Accesspoints oldAccessPoints; // Roadbobeks Stuff
 Stations     stations;
 Scan   scan;
 Attack attack;

@@ -1,13 +1,23 @@
-# ESP8266 Deauther
+# Roadbobek's ESP8266 Deauther
 
-<img src='https://deauther.com/img/logo.png' alt='Deauther Logo' width='200' />
+<img src='roadbobeks_esp8266_deauther.png' alt='Roadbobek's ESP8266 Deauther Logo' width='128' />
 
-**Scan for WiFi devices, block selected connections, create dozens of networks and confuse WiFi scanners.**
+<img src='https://docs.spacehuhn.com/img/deauther/logo.png' alt='Deauther Logo' width='200' />
 
-## New Documentation
+**Version: *1.0.0***
 
-Hi 👋  
-Please visit [Deauther.com](https://deauther.com) for information about this project.  
+### Affordable WiFi hacking platform based on the ESP8266 for penetration testing and learning. Original by Spacehuhn, modified by Roadbobek.
+
+**Scan for WiFi devices, block selected connections, create dozens of networks and confuse WiFi scanners, and more.**
+
+## Note
+
+The original project is by [Spacehuhn](https://github.com/SpacehuhnTech/esp8266_deauther), I have just been modifying it to add have some fun, add some features and learn more C++. This is like my 2nd time working with C++ so I don't really know wtf I'm doing.
+
+## Original Documentation
+
+Hello 👋  
+Please visit [Deauther.com](https://deauther.com) for information about the original project by Spacehun.  
 Here are some quick links:
 
 * [Buy](https://deauther.com/docs/buy)
@@ -35,4 +45,5 @@ Neither the ESP8266, nor its SDK was meant or built for such purposes. **Bugs ca
 
 **Use it only against your own networks and devices!**  
 Please check the legal regulations in your country before using it.  
-We don't take any responsibility for what you do with this program.  
+I don't take any responsibility for what you do with this program.
+But I won't tell anyone if you don't.

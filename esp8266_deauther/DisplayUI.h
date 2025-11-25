@@ -36,6 +36,7 @@ using namespace simplebutton;
 extern Names names;
 extern SSIDs ssids;
 extern Accesspoints accesspoints;
+extern Accesspoints oldAccessPoints; // Roadbobeks Stuff
 extern Stations     stations;
 extern Scan     scan;
 extern Attack   attack;
@@ -49,13 +50,13 @@ extern String leftRight(String a, String b, int len);
 extern String replaceUtf8(String str, String r);
 
 const char D_INTRO_0[] PROGMEM = "ESP8266 Deauther";
-const char D_INTRO_1[] PROGMEM = "by @Spacehuhn";
+const char D_INTRO_1[] PROGMEM = "modded by";
 const char D_INTRO_2[] PROGMEM = DISPLAY_TEXT;
 const char D_RESETTING[] PROGMEM = "Resetting...";
 const char D_SCANNING_0[] PROGMEM = "> Scanning";
-const char D_SCANNING_1[] PROGMEM = "> Scanning.";
-const char D_SCANNING_2[] PROGMEM = "> Scanning..";
-const char D_SCANNING_3[] PROGMEM = "> Scanning...";
+const char D_SCANNING_1[] PROGMEM = "> Scanning <3";
+const char D_SCANNING_2[] PROGMEM = "> Scanning <33";
+const char D_SCANNING_3[] PROGMEM = "> Scanning <333";
 
 struct MenuNode {
     std::function<String()>getStr; // function used to create the displayed string
@@ -78,6 +79,11 @@ enum class DISPLAY_MODE { OFF,
                           INTRO,
                           CLOCK,
                           CLOCK_DISPLAY,
+                          DISPLAY_RSSI, // Roadbobeks Stuff
+                          DISPLAY_ROADBOBEK_STR, // Roadbobeks Stuff
+                          DISPLAY_ROADBOBEK_PIC, // Roadbobeks Stuff
+                          DISPLAY_WIFI_ANIM, // Roadbobeks Stuff
+                          DISPLAY_UPTIME, // Roadbobeks Stuff
                           RESETTING };
 
 class DisplayUI {
@@ -159,6 +165,9 @@ class DisplayUI {
         Menu attackMenu;
         Menu clockMenu;
 
+        // Roadbobeks Stuff
+        Menu roadbobekMenu;
+
         Menu apListMenu;
         Menu stationListMenu;
         Menu nameListMenu;
@@ -203,6 +212,17 @@ class DisplayUI {
         int clockSecond = 0;
 
         uint32_t clockTime = 0;
+
+        // Roadbobeks Stuff
+        void drawRSSI();
+        void drawBobeksPic();
+        void drawBobeksStr();
+        void drawWifiAnim();
+        void drawUptime();
+
+        // Roadbobeks Stuff
+        int rssiScrollOffset = 0;  // Tracks the index of the first item to display in the RSSI menu
+        bool drawStartPic = false;
 
 #ifdef RTC_DS3231
         DS3231 clock;
