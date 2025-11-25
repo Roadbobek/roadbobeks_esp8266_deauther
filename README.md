@@ -1,6 +1,6 @@
 # Roadbobek's ESP8266 Deauther
 
-<img src='roadbobeks_esp8266_deauther.png' alt='Roadbobek's ESP8266 Deauther Logo' width='128' />
+<img src='https://raw.githubusercontent.com/Roadbobek/roadbobeks_esp8266_deauther/v2/roadbobeks_esp8266_deauther.png' alt='Roadbobek's ESP8266 Deauther Logo' width='128' />
 
 <img src='https://docs.spacehuhn.com/img/deauther/logo.png' alt='Deauther Logo' width='200' />
 
