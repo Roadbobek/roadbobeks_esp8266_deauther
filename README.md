@@ -1,8 +1,11 @@
 # Roadbobek's ESP8266 Deauther
 
-![Roadbobek's ESP8266 Deauther Logo](https://raw.githubusercontent.com/Roadbobek/roadbobeks_esp8266_deauther/v2/roadbobeks_esp8266_deauther.png)
-
-<img src='https://docs.spacehuhn.com/img/deauther/logo.png' alt='Deauther Logo' width='200' />
+<table>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/Roadbobek/roadbobeks_esp8266_deauther/v2/roadbobeks_esp8266_deauther.png" alt="Roadbobek's ESP8266 Deauther Logo" width="128" /></td>
+    <td><img src="https://docs.spacehuhn.com/img/deauther/logo.png" alt="Deauther Logo" width="200" /></td>
+  </tr>
+</table>
 
 **Version: *1.0.0***
 
